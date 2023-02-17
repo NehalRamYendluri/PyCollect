@@ -40,7 +40,7 @@ def draw(win):
     win.surface.blit(tt, dest=(225, 40))
 
 
-pygame.mixer.music.load("assets/soundtrack.wav")
+pygame.mixer.music.load("assets/soundtrack.mp3")
 pygame.mixer.music.play()
 while True:
     clock.tick(FPS)
