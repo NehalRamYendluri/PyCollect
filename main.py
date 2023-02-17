@@ -49,9 +49,9 @@ while True:
             pygame.mixer.quit()
             pygame.quit()
             sys.exit()
-        keys = pygame.key.get_pressed()
-        if 1 in keys:
-            player.move(keys, WIN)
+    keys = pygame.key.get_pressed()
+    if 1 in keys:
+        player.move(keys, WIN)
     if len(coins) < 4:
         coins.append(
             Coin(random.randint(0, WIN.width - 100),
