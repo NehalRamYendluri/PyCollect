@@ -7,7 +7,7 @@ import random, time , math
 
 pygame.init()
 WIN = Window(500, 400, "Game Test")
-player = Player(40, 300, 64, 64, (255, 0, 0), 4)
+player = Player(40, 275, 64, 64, (255, 0, 0), 4)
 FPS = 60
 clock = pygame.time.Clock()
 coins = []
@@ -42,7 +42,7 @@ def draw(win):
 
 bgm = pygame.mixer.Sound("assets/soundtrack.mp3")
 coinm = pygame.mixer.Sound("assets/coin.mp3")
-pygame.mixer.Channel(0).play(bgm)
+pygame.mixer.Channel(0).play(bgm,-1)
 while True:
     clock.tick(FPS)
     for event in pygame.event.get():
@@ -62,7 +62,12 @@ while True:
             pygame.mixer.Channel(1).play(coinm)
             coinsc += 1
             coins.remove(i)
-            if vel < 0.3:
+            if vel < 0.5:
               vel += 0.02
+            else:
+                vel += 0.005
+                player.vel += 0.0025
+        if i.y > WIN.height - 75:
+            coins.remove(i)        
     draw(WIN)
     pygame.display.update()
