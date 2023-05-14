@@ -7,8 +7,8 @@ import random, time , math
 
 pygame.init()
 WIN = Window(500, 400, "Game Test")
-player = Player(40, 275, 64, 64, (255, 0, 0), 300)
-FPS = 60
+player = Player(40, 275, 64, 64, (255, 0, 0), 340)
+FPS = 80
 clock = pygame.time.Clock()
 coins = []
 font = pygame.font.Font(pygame.font.get_default_font(), 18)
@@ -18,6 +18,10 @@ bg = pygame.image.load("assets/background.png").convert()
 bg = pygame.transform.scale(bg,(500,400))
 vel = 10
 
+def two_d(num):
+    if num < 10:
+        num = "0"+str(num)
+    return str(num)
 def draw(win,dt):
     win.surface.blit(bg,dest=(0,0))
     for i in coins:
@@ -35,7 +39,7 @@ def draw(win,dt):
     curr_time = time.perf_counter()
     win.surface.blit(coinst, dest=(50, 40))
     tt = pygame.font.Font.render(font,
-                                 "Time: " + str(str(math.floor((curr_time - start_time)/60))+":"+str(round((curr_time-start_time) % 60))),
+                                 "Time: " + str(str(math.floor((curr_time - start_time)/60))+":"+two_d(round((curr_time-start_time) % 60))),
                                  True, (0, 0, 0))
     win.surface.blit(tt, dest=(225, 40))
 
@@ -65,9 +69,9 @@ while True:
             coins.remove(i)
             if vel < 20:
               vel += 0.5
-            else:
+            elif player.vel < 700:
                 vel += 0.25
-                player.vel += 2.5
+                player.vel += 2.5    
         if i.y > WIN.height - 75:
             coins.remove(i)        
     draw(WIN,dt)
