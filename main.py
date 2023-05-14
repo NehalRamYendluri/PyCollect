@@ -8,7 +8,7 @@ import random, time , math
 pygame.init()
 WIN = Window(500, 400, "Game Test")
 player = Player(40, 275, 64, 64, (255, 0, 0), 340)
-FPS = 80
+FPS = 60
 clock = pygame.time.Clock()
 coins = []
 font = pygame.font.Font(pygame.font.get_default_font(), 18)
@@ -45,7 +45,9 @@ def draw(win,dt):
 
 
 bgm = pygame.mixer.Sound("assets/soundtrack.mp3")
+bgm.set_volume(0.5)
 coinm = pygame.mixer.Sound("assets/coin.mp3")
+coinm.set_volume(0.5)
 pygame.mixer.Channel(0).play(bgm,-1)
 while True:
     clock.tick(FPS)
