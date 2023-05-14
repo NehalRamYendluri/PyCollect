@@ -19,16 +19,16 @@ class Player():
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         win.blit(self.img, dest=(self.x, self.y))
 
-    def move(self, keys, win):
+    def move(self, keys, win,dt):
         if keys[pygame.K_w] or keys[pygame.K_UP]:
             if self.y > 25:
-                self.y -= self.vel
+                self.y -= self.vel * dt
         if keys[pygame.K_s] or keys[pygame.K_DOWN]:
             if self.y + self.height < win.height-75:
-                self.y += self.vel
+                self.y += self.vel * dt
         if keys[pygame.K_a] or keys[pygame.K_LEFT]:
             if self.x > 0:
-                self.x -= self.vel
+                self.x -= self.vel * dt
         if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
             if self.x + self.width < win.width:
-                self.x += self.vel
+                self.x += self.vel * dt
