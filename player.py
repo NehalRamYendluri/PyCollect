@@ -21,10 +21,10 @@ class Player():
 
     def move(self, keys, win):
         if keys[pygame.K_w] or keys[pygame.K_UP]:
-            if self.y > 0:
+            if self.y > 25:
                 self.y -= self.vel
         if keys[pygame.K_s] or keys[pygame.K_DOWN]:
-            if self.y + self.height < win.height:
+            if self.y + self.height < win.height-75:
                 self.y += self.vel
         if keys[pygame.K_a] or keys[pygame.K_LEFT]:
             if self.x > 0:
