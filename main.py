@@ -7,7 +7,7 @@ import random, time , math
 
 pygame.init()
 WIN = Window(500, 400, "Game Test")
-player = Player(40, 275, 64, 64, (255, 0, 0), 4)
+player = Player(40, 275, 64, 64, (255, 0, 0), 300)
 FPS = 60
 clock = pygame.time.Clock()
 coins = []
@@ -16,15 +16,15 @@ coinsc = 0
 start_time = time.perf_counter()
 bg = pygame.image.load("assets/background.png").convert()
 bg = pygame.transform.scale(bg,(500,400))
-vel = 0.1
+vel = 10
 
-def draw(win):
+def draw(win,dt):
     win.surface.blit(bg,dest=(0,0))
     for i in coins:
         if i.y > win.height - 100:
           coins.remove(i)
           continue
-        i.y += vel
+        i.y += vel * dt
         i.draw(win)
     player.draw(win.surface)
     fpst = pygame.font.Font.render(font, "FPS: " + str(int(clock.get_fps())),
@@ -45,6 +45,7 @@ coinm = pygame.mixer.Sound("assets/coin.mp3")
 pygame.mixer.Channel(0).play(bgm,-1)
 while True:
     clock.tick(FPS)
+    dt = clock.tick(FPS)/1000
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.mixer.quit()
@@ -52,22 +53,22 @@ while True:
             sys.exit()
     keys = pygame.key.get_pressed()
     if 1 in keys:
-        player.move(keys, WIN)
+        player.move(keys, WIN,dt)
     if len(coins) < 4:
         coins.append(
             Coin(random.randint(0, WIN.width - 100),
-                 random.randint(0, WIN.height - 400)))
+                 random.randint(0, WIN.height - 320)))
     for i in coins:
         if i.rect.colliderect(player.rect):
             pygame.mixer.Channel(1).play(coinm)
             coinsc += 1
             coins.remove(i)
-            if vel < 0.5:
-              vel += 0.02
+            if vel < 20:
+              vel += 0.5
             else:
-                vel += 0.005
-                player.vel += 0.0025
+                vel += 0.25
+                player.vel += 2.5
         if i.y > WIN.height - 75:
             coins.remove(i)        
-    draw(WIN)
+    draw(WIN,dt)
     pygame.display.update()
