@@ -3,12 +3,12 @@ from pygame.locals import QUIT
 from player import Player
 from display import Window
 from coin import Coin
-import random, time
+import random, time , math
 
 pygame.init()
 WIN = Window(500, 400, "Game Test")
 player = Player(40, 300, 64, 64, (255, 0, 0), 4)
-FPS = 200
+FPS = 60
 clock = pygame.time.Clock()
 coins = []
 font = pygame.font.Font(pygame.font.get_default_font(), 18)
@@ -35,13 +35,14 @@ def draw(win):
     curr_time = time.perf_counter()
     win.surface.blit(coinst, dest=(50, 40))
     tt = pygame.font.Font.render(font,
-                                 "Time: " + str(round(curr_time - start_time)),
+                                 "Time: " + str(str(math.floor((curr_time - start_time)/60))+":"+str(round((curr_time-start_time) % 60))),
                                  True, (0, 0, 0))
     win.surface.blit(tt, dest=(225, 40))
 
 
-pygame.mixer.music.load("assets/soundtrack.mp3")
-pygame.mixer.music.play()
+bgm = pygame.mixer.Sound("assets/soundtrack.mp3")
+coinm = pygame.mixer.Sound("assets/coin.mp3")
+pygame.mixer.Channel(0).play(bgm)
 while True:
     clock.tick(FPS)
     for event in pygame.event.get():
@@ -58,6 +59,7 @@ while True:
                  random.randint(0, WIN.height - 400)))
     for i in coins:
         if i.rect.colliderect(player.rect):
+            pygame.mixer.Channel(1).play(coinm)
             coinsc += 1
             coins.remove(i)
             if vel < 0.3:
