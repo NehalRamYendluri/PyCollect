@@ -13,16 +13,20 @@ class Player():
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         self.img = pygame.image.load("assets/helicopter.png")
         self.img = pygame.transform.scale(self.img, (100, 100))
+        #self.img = pygame.transform.rotate(self.img,10)
         self.img.set_colorkey((255, 255, 255))
         self.img1 = pygame.transform.flip(self.img,True,False)
         self.img1 = pygame.transform.scale(self.img1,(100,100))
+        #self.img1 = pygame.transform.rotate(self.img1,350)
         self.img1.set_colorkey((255, 255, 255))
         self.left = True
     def draw(self, win):
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         if self.left:
+           
            win.blit(self.img, dest=(self.x, self.y))
         else:
+            
             win.blit(self.img1, dest=(self.x, self.y))
     def move(self, keys, win,dt):
         if keys[pygame.K_w] or keys[pygame.K_UP]:
